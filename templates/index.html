@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mobile Price Range Prediction</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+           background-color: rgb(186, 227, 228);
+            font-family: Arial, sans-serif;
+
+        }
+        .container {
+            height: 100%;
+            background-color: #fff;
+            position: relative;
+            top: 5vh;
+            border-radius: 40px 10px;
+            box-shadow: 20px 30px gray;
+
+        }
+        .container1 {
+            height: 30vh;
+            background-color: #fff;
+            position: relative;
+            top: 10vh;
+            padding: 20px;
+            text-align: center;
+
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="container"><br><br>
+        <h1 class="text-center">Mobile Price Range Prediction</h1><br>
+        <form action="/predict" method="post">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="battery_power">Battery Power (mAh):</label>
+                        <input type="text" class="form-control" name="battery_power" id="battery_power">
+                    </div>
+                    <div class="form-group">
+                        <label for="blue">Bluetooth:</label>
+                        <select class="form-control" name="blue" id="blue">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="clock_speed">Clock Speed (GHz):</label>
+                        <input type="text" class="form-control" name="clock_speed" id="clock_speed">
+                    </div>
+                    <div class="form-group">
+                        <label for="fc">Front Camera:</label>
+                        <select class="form-control" name="fc" id="fc">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pc">Primary Camera:</label>
+                        <select class="form-control" name="pc" id="pc">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="four_g">4G:</label>
+                        <select class="form-control" name="four_g" id="four_g">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dual_sim">Dual SIM:</label>
+                        <select class="form-control" name="dual_sim" id="dual_sim">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="int_memory">Internal Memory (GB):</label>
+                        <input type="text" class="form-control" name="int_memory" id="int_memory">
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile_wt">Mobile Weight(g):</label>
+                        <input type="text" class="form-control" name="mobile_wt" id="mobile_wt">
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label for="n_cores">Number of Cores:</label>
+                        <input type="text" class="form-control" name="n_cores" id="n_cores">
+                    </div>
+                    <div class="form-group">
+                        <label for="px_height">Pixel Resolution Height:</label>
+                        <input type="text" class="form-control" name="px_height" id="px_height">
+                    </div>
+                    <div class="form-group">
+                        <label for="px_width">Pixel Resolution Width:</label>
+                        <input type="text" class="form-control" name="px_width" id="px_width">
+                    </div>
+                    <div class="form-group">
+                        <label for="ram">RAM (MB):</label>
+                        <input type="text" class="form-control" name="ram" id="ram">
+                    </div>
+                    <div class="form-group">
+                        <label for="sc_h">Screen Height (cm):</label>
+                        <input type="text" class="form-control" name="sc_h" id="sc_h">
+                    </div>
+                    <div class="form-group">
+                        <label for="sc_w">Screen Width (cm):</label>
+                        <input type="text" class="form-control" name="sc_w" id="sc_w">
+                    </div>
+                    <div class="form-group">
+                        <label for="three_g">3G:</label>
+                        <select class="form-control" name="three_g" id="three_g">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="touch_screen">Touch Screen:</label>
+                        <select class="form-control" name="touch_screen" id="touch_screen">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="wifi">WiFi:</label>
+                        <select class="form-control" name="wifi" id="wifi">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                </div>
+            </div><br><br>
+            <div class="text-center">
+                <input type="submit" class="btn btn-primary" value="Predict Price Range">
+            </div><br>
+        </form>
+    </div>
+    <div class="container container1 mt-5" style="margin-bottom: 200px;">
+        <div class="prediction">
+            <h2>Prediction:</h2>
+            <p style="color: red;">**Note: 0 (low cost), 1 (medium cost), 2 (high cost) and 3 (very high cost)</p>
+            {% if prediction %}
+            <h2>{{ prediction }}</h2>
+            {% endif %}
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
